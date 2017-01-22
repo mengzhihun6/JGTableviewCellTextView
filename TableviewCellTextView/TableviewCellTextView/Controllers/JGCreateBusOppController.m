@@ -95,7 +95,7 @@ static NSString * const JGBusOppFirstViewCellId = @"JGBusOppFirstViewCellId";
     
     if (!_tableView) {
         
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.navView.bottom, kDeviceWidth, kDeviceHight - self.navView.height) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.navView.bottom, kDeviceWidth, kDeviceHight - self.navView.height) style:UITableViewStyleGrouped];
         _tableView.dataSource = self;
         _tableView.delegate = self;
         [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:JGTableViewCellId];
@@ -386,9 +386,9 @@ static NSString * const JGBusOppFirstViewCellId = @"JGBusOppFirstViewCellId";
             cell.titleLbl.text = @"商机来源";
         }else if (indexPath.row == 2) {
             cell.titleLbl.text = @"商机描述";
-            if (_myIndex == 1) {
-                [cell.contentTextV becomeFirstResponder];
-            }
+//            if (_myIndex == 1) {
+//                [cell.contentTextV becomeFirstResponder];
+//            }
         }
         return cell;
     }else if (indexPath.section == 1){
@@ -494,19 +494,8 @@ static NSString * const JGBusOppFirstViewCellId = @"JGBusOppFirstViewCellId";
         self.firstStr2 = Str;
     }else if ([cell.titleLbl.text isEqualToString:@"商机描述"]) {
         self.firstStr3 = Str;
-        
-        if (![Str isEqualToString:@""]) {
-            //            NSLog(@"++++++++++++++++++%@",Str);
-            
-            CGSize calculateSize = [self sizeForLblContent:self.firstStr3 fixMaxWidth:kDeviceWidth - 73 andFondSize:16];
-            if (calculateSize.height != _indexSize.height) {
-                //                NSLog(@"##############%@",Str);
-                _myIndex= 1;
-                _indexSize.height = calculateSize.height;
-                [self.tableView reloadData];
-            }
-        }
-        
+        [self.tableView beginUpdates];
+        [self.tableView endUpdates];
     }
 
 }
